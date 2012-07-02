@@ -3,9 +3,9 @@
   "name": "love-language",
   "description": "A commandline version of The Love Languages test",
   "version": "0.8.0",
-  "homepage": "https://github.com/coolaj86/the-love-languages",
+  "homepage": "https://github.com/coolaj86/the-5-love-languages",
   "repository": {
-    "url": "git://github.com/coolaj86/the-love-languages.git"
+    "url": "git://github.com/coolaj86/the-5-love-languages.git"
   },
   "main": "love-language.js",
   "scripts": {

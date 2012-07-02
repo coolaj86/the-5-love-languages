@@ -1,0 +1,23 @@
+{
+  "author": "AJ ONeal <coolaj86@gmail.com> (http://coolaj86.info/)",
+  "name": "love-language",
+  "description": "A commandline version of The Love Languages test",
+  "version": "0.8.0",
+  "homepage": "https://github.com/coolaj86/the-love-languages",
+  "repository": {
+    "url": "git://github.com/coolaj86/the-love-languages.git"
+  },
+  "main": "love-language.js",
+  "scripts": {
+    "test": "node love-language"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "bin": {
+    "love-language": "love-language.js"
+  },
+  "engines": {
+    "node": "*"
+  }
+}

@@ -9,7 +9,8 @@
   },
   "main": "love-language.js",
   "scripts": {
-    "test": "node love-language"
+    "test": "node love-language",
+    "postinstall": "node get-example"
   },
   "dependencies": {},
   "devDependencies": {},

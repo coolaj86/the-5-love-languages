@@ -4,9 +4,11 @@
   "use strict";
 
   var fs = require('fs')
+    , path = require('path')
     , util = require('util')
       // 5-love-languages-us
-    , questions = require('./questionnaire.json')
+    , questionnaireFile = process.argv[2] || path.join(__dirname + './questionnaire.json')
+    , questions = require(questionnaireFile)
     , total = questions.length
     , doneQuestions = []
     , languagesArr = ['A', 'B', 'C', 'D', 'E']

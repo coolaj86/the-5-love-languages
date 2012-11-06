@@ -5,7 +5,8 @@
 
   var fs = require('fs')
     , util = require('util')
-    , questions = require('./5-love-languages-us.json')
+      // 5-love-languages-us
+    , questions = require('./questionnaire.json')
     , total = questions.length
     , doneQuestions = []
     , languagesArr = ['A', 'B', 'C', 'D', 'E']

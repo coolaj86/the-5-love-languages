@@ -4,7 +4,9 @@ The Five Love Languages Test
 New, Unimproved, Commandline Edition
 ---
 
-After creating a test in the format of "The Color Code: Commandline Edition", the next natural step was to create a test in the format of "The 5 Love Languages". Also randomized and soved to JSON. W00T!
+After creating a test in the format of "The Color Code: Commandline Edition",
+the next natural step was to create a test in the format of "The 5 Love Languages".
+Also randomized and saved to JSON. W00T!
 
     npm install -g love-language
     love-language

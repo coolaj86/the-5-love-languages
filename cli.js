@@ -5,7 +5,7 @@
   var fs = require('fs')
     , path = require('path')
     , util = require('util')
-    , Quizomatic = require('./quizomatic')
+    , Quizomatic = require('./quizomatic').Quizomatic
     , questionnaireFile = process.argv[2] || path.join(__dirname, './questionnaire.json')
     , directives = require(questionnaireFile)
     , quiz = Quizomatic.create(directives, { randomize: true })

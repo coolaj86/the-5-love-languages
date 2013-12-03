@@ -1,137 +1,135 @@
-#!/usr/bin/env node
 (function () {
   "use strict";
 
-  var fs = require('fs')
-    , path = require('path')
-    , util = require('util')
-    , shuffle = require('knuth-shuffle').knuthShuffle
-    , questionnaireFile = process.argv[2] || path.join(__dirname, './questionnaire.json')
-    , directives = require(questionnaireFile)
-    , questions = directives.questions || directives
-    , languages = directives.groups || { 'A': 'affirmation', 'B': 'time', 'C': 'gifts', 'D': 'service', 'E': 'touch' }
-    , title = directives.title || 'Welcome to The Love Languages Test: Commandline Edition.'
-    , responseFilePrefix = directives.key || 'love-languages-test'
-    , total = questions.length
-    , doneQuestions = []
-    , languagesArr = Object.keys(languages)
-    , languagesMap
-    , current
-    , responses = { totals: {} , answers: {} }
+  var shuffle = require('knuth-shuffle').knuthShuffle
+    , defaultGroups = { 'A': 'affirmation', 'B': 'time', 'C': 'gifts', 'D': 'service', 'E': 'touch' }
+    , defaultTitle = 'Welcome to The Love Languages Test: Commandline Edition.'
+    , defaultQuestion = 'Which describes you best (if torn between two, think of your childhood)?'
+    , proto
     ;
 
-  languagesArr.forEach(function (key) {
-    responses.totals[languages[key]] = 0;
-  });
+  function Quizomatic(directives, opts) {
+    opts = opts || {};
 
-  function presentQuestion() {
-    if (true !== (questions.length >= 1)) {
+    var me = this
+      ;
+
+    me._randomize = opts.randomize;
+
+    me._groups = directives.groups || defaultGroups;
+    me._title = directives.title || defaultTitle;
+    me._remainingQuestions = directives.questions.slice(0) || directives.slice(0);
+    me._total = directives.questions.length;
+    me._doneQuestions = [];
+    me._groupsArr = Object.keys(me._groups);
+    me._current = null;
+    me._responses = { totals: {} , answers: {} };
+    me._groupsArr.forEach(function (key) {
+      me._responses.totals[me._groups[key]] = 0;
+    });
+
+    if (me._randomize) {
+      shuffle(me._remainingQuestions);
+    }
+  }
+  proto = Quizomatic.prototype;
+  proto.next = function () {
+    var me = this
+      ;
+
+    if (!me.hasNext()) {
+      return null;
+    }
+
+    me._current = me._remainingQuestions.pop();
+    me._current.choices = [];
+    me._doneQuestions.push(me._current);
+
+    me._current.question = me._current.question || defaultQuestion;
+
+    // I have a hard time believing that shuffling 2 items
+    // would yield unbiased results, so we shuffle the group
+    if (me._randomize) {
+      shuffle(me._groupsArr);
+    }
+
+    me._groupsArr.forEach(function (group) {
+      if (me._current[group]) {
+        me._current.choices.push({
+          group: group
+        , response: me._current[group]
+        });
+      }
+    });
+
+    return { current: me._current, remaining: me._remainingQuestions.length, total: me._total };
+  };
+  proto.hasPrevious = function () {
+    var me = this
+      ;
+
+    return !!me._doneQuestions.length;
+  };
+  proto.previous = function () {
+    var me = this
+      ;
+
+    // TODO leave me._current as a floater, not in doneQs or remainingQs
+
+    // push the current q back on the stack
+    if (!me.hasPrevious()) {
+      return null;
+    }
+    me._remainingQuestions.push(me._doneQuestions.pop());
+
+    // push the real previous q back on the stack
+    if (!me.hasPrevious()) {
+      return null;
+    }
+    me._remainingQuestions.push(me._doneQuestions.pop());
+
+    return me.next();
+  };
+  proto.responses = function () {
+    var me = this
+      ;
+
+    return me._responses.answers;
+  };
+  proto.totals = function () {
+    var me = this
+      ;
+
+    return me._responses.totals;
+  };
+  proto.hasNext = function () {
+    var me = this
+      ;
+
+    return !!me._remainingQuestions.length;
+  };
+  proto.respond = function (i) {
+    var me = this
+      ;
+
+    if (!me._current.choices[i]) {
       return false;
     }
-    current = questions.pop();
 
-    var curNum = String(total - questions.length) + ' of ' + total + ' (#' + current.number + ')\n'
-      ;
-
-    doneQuestions.push(current);
-    console.log(curNum);
-    if (current.question) {
-      console.log(current.question);
-    } else {
-      console.log("Which describes you best (if torn between two, think of your childhood)?");
-    }
-    shuffle(languagesArr);
-    languagesMap = {};
-    languagesArr.forEach(function (lang) {
-      if (!current[lang]) {
-        return;
-      }
-      if (!languagesMap[1]) {
-        languagesMap[1] = lang;
-        util.print('1) ');
-      } else {
-        languagesMap[2] = lang;
-        util.print('2) ');
-      }
-      console.log(current[lang]);
-    });
-    console.log('');
-    util.print('answer> ');
+    me._responses.answers[me._current.number] = me._groups[me._current.choices[i].group];
+    me._responses.totals[me._groups[me._current.choices[i].group]] += 1;
 
     return true;
-  }
-
-  function goBack() {
-    // Push the current question back on the stack
-    if (true === (doneQuestions.length > 0)) {
-      questions.push(doneQuestions.pop());
-    }
-    if (true !== (doneQuestions.length > 0)) {
-      console.log("There are no questions before this one, can't go back!");
-    } else {
-      // Push the previous question back on the stack
-      questions.push(doneQuestions.pop());
-    }
-    presentQuestion();
-  }
-
-  function saveResponses() {
-    var filename = responseFilePrefix + '-' + Date.now() + '.json'
+  };
+  proto.shuffle = function () {
+    var me = this
       ;
 
-    // TODO output as YAML
-    fs.writeFile(filename, JSON.stringify(responses, null, '  '), function (err) {
-      console.log('You finished');
-      Object.keys(responses.totals).sort(function (keyA, keyB) {
-        return responses.totals[keyB] - responses.totals[keyA];
-      }).forEach(function (key) {
-        console.log(key + ':', responses.totals[key]);
-      });
-      console.log("Now go read the book to learn more!");
-      if (err) {
-        console.error("couldn't save results");
-      } else {
-        console.log(process.cwd() + '/' + filename);
-      }
-      process.stdin.pause();
-    });
+    shuffle(me._remainingQuestions);
+  };
+  function create(dir, opts) {
+    return new Quizomatic(dir, opts);
   }
 
-  function interpretAnswer(num) {
-    num = num.replace(/\s/gm, '').toLowerCase();
-    var lang =  languagesMap[num]
-      ;
-
-    if (lang) {
-      responses.answers[current.number] = languages[lang];
-      responses.totals[languages[lang]] += 1;
-    } else if ('p' === num) {
-      goBack();
-      return;
-    } else {
-      console.log("Sorry, I didn't understand you. Respond again with 1, 2, or 'p' (for previous question)");
-      return;
-    }
-    console.log('');
-
-    if (presentQuestion()) {
-      return;
-    }
-
-    saveResponses();
-  }
-
-  shuffle(questions);
-  process.stdin.resume();
-  process.stdin.setEncoding('utf8');
-  console.log('');
-  console.log(title);
-  console.log('');
-  console.log('Read the question, type your answer (1 or 2), and hit enter to submit');
-  console.log('');
-  console.log('Type \'p\' to go to the previous question if you make a boo-boo.');
-  console.log('');
-  presentQuestion();
-  process.stdin.on('data', interpretAnswer);
-  
+  module.exports.create = create;
 }());

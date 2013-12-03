@@ -18,7 +18,7 @@
 
     me._groups = directives.groups || defaultGroups;
     me._title = directives.title || defaultTitle;
-    me._remainingQuestions = directives.questions.slice(0) || directives.slice(0);
+    me._remainingQuestions = (directives.questions || directives).slice(0);
     me._total = directives.questions.length;
     me._doneQuestions = [];
     me._groupsArr = Object.keys(me._groups);

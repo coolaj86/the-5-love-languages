@@ -28,6 +28,7 @@ Test Format
 
 ```javascript
 { "title": "Welcome to the 5 Love Languages Test"
+, "key": "love-languages"
 , "groups": {
     "A": "affirmation"
   , "B": "touch"
@@ -41,8 +42,21 @@ Test Format
       , "A": "I like to be affirmed."
       , "B": "I like to be touched."
     }
+  , {
+        "number": "2"
+      , "C": "I like to get gifts."
+      , "D": "I like to receive service."
+    }
+  , {
+        "number": "3"
+      , "E": "I like to be touched."
+      , "A": "I like to be affirmed."
+    }
   ]
 }
 ```
 
-The keys may be anything you like, but only two keys may be added per test.
+You can have as many groups as you like and the keys (A, B, C, etc) may be anything you like
+(except the word 'number', which is reserved),
+but only two keys may tested per question and you should play each group against each other
+group at least 2, but preferrably 3 times.

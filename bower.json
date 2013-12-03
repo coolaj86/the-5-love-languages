@@ -1,0 +1,18 @@
+{
+  "name": "quizomatic",
+  "version": "0.11.0",
+  "main": "quizomatic.js",
+  "ignore": [
+    ".jshintrc"
+  , "package.json"
+  , "cli.js"
+  , "TAKEDOWN.md"
+  , "get-example.js"
+  , "node_modules/**"
+  , "questionnaire.json"
+  ],
+  "dependencies": {
+    "knuth-shuffle": "~1.0.0"
+  },
+  "devDependencies": {}
+}

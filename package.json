@@ -1,22 +1,25 @@
 {
-  "author": "AJ ONeal <coolaj86@gmail.com> (http://coolaj86.info/)",
+  "author": "AJ ONeal <coolaj86@gmail.com> (http://coolaj86.com/)",
   "name": "love-language",
-  "description": "A commandline version of The Love Languages test",
-  "version": "0.9.0",
+  "description": "Quizomatic: A commandline version of The Love Languages test",
+  "version": "0.10.0",
   "homepage": "https://github.com/coolaj86/the-5-love-languages",
   "repository": {
     "url": "git://github.com/coolaj86/the-5-love-languages.git"
   },
-  "main": "love-language.js",
+  "main": "quizomatic.js",
   "scripts": {
-    "test": "node love-language",
+    "test": "node quizomatic",
     "postinstall": "node get-example"
   },
-  "dependencies": {},
+  "dependencies": {
+    "knuth-shuffle": "~1.0.0"
+  },
   "devDependencies": {},
   "optionalDependencies": {},
   "bin": {
-    "love-language": "love-language.js"
+    "love-language": "quizomatic.js"
+  , "quizomatic": "quizomatic.js"
   },
   "engines": {
     "node": "*"

@@ -1,0 +1,101 @@
+{
+  "title": "Welcome to Find Your Clan: Commandline Edition"
+, "groups": {
+      "N": "north"
+    , "E": "east"
+    , "S": "south"
+    , "W": "west"
+  }
+, "questions": [
+    {
+      "number": 1,
+      "N": "I project competence",
+      "E": "I seek to be viewed as sincere"
+    },
+    {
+      "number": 2,
+      "E": "It’s more important to take the time to connect and explain",
+      "N": "It’s more important to be direct"
+    },
+    {
+      "number": 3,
+      "E": "Answers are often grey",
+      "N": "Answers are usually black and white"
+    },
+    {
+      "number": 4,
+      "N": "I direct projects",
+      "S": "I get projects done"
+    },
+    {
+      "number": 5,
+      "S": "I have the patience to repeat a process",
+      "N": "I dislike repetition"
+    },
+    {
+      "number": 6,
+      "S": "It’s important to stick to the plan",
+      "N": "I like to change the plan"
+    },
+    {
+      "number": 7,
+      "W": "Ideas must be supported with facts",
+      "N": "All ideas are good ideas"
+    },
+    {
+      "number": 8,
+      "N": "I’d rather make the rules",
+      "W": "I’d rather enforce the rules"
+    },
+    {
+      "number": 9,
+      "N": "I want to decide",
+      "W": "I want to provide the facts for a decision"
+    },
+    {
+      "number": 10,
+      "E": "Rules are relative",
+      "W": "I prefer to know the rules"
+    },
+    {
+      "number": 11,
+      "W": "I’ll stay and mind the store",
+      "E": "I’ll go out and find new customers"
+    },
+    {
+      "number": 12,
+      "E": "I can make it up as I go",
+      "W": "I prefer a plan"
+    },
+    {
+      "number": 13,
+      "S": "Getitdone!",
+      "W": "Be exact!"
+    },
+    {
+      "number": 14,
+      "W": "I uphold team standards",
+      "S": "I hold the team together"
+    },
+    {
+      "number": 15,
+      "S": "I evaluate people based on a gut feeling",
+      "W": "I evaluate people based on facts"
+    },
+    {
+      "number": 16,
+      "S": "I get frustrated when work is delayed and there are too many possibilities",
+      "E": "I get energized by exploring more possibilities"
+    },
+    {
+      "number": 17,
+      "S": "People describe my work style as steady",
+      "E": "I get work done in spurts"
+    },
+    {
+      "number": 18,
+      "S": "Where is the to do list?",
+      "E": "What are the possibilities?"
+    }
+  ]
+}

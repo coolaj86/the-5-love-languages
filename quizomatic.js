@@ -1,42 +1,28 @@
 #!/usr/bin/env node
-/*jshint strict:true node:true es5:true onevar:true laxcomma:true laxbreak:true eqeqeq:true immed:true latedef:true*/
 (function () {
   "use strict";
 
   var fs = require('fs')
     , path = require('path')
     , util = require('util')
-      // 5-love-languages-us
+    , shuffle = require('knuth-shuffle').knuthShuffle
     , questionnaireFile = process.argv[2] || path.join(__dirname, './questionnaire.json')
-    , questions = require(questionnaireFile)
+    , directives = require(questionnaireFile)
+    , questions = directives.questions || directives
+    , languages = directives.groups || { 'A': 'affirmation', 'B': 'time', 'C': 'gifts', 'D': 'service', 'E': 'touch' }
+    , title = directives.title || 'Welcome to The Love Languages Test: Commandline Edition.'
+    , responseFilePrefix = directives.key || 'love-languages-test'
     , total = questions.length
     , doneQuestions = []
-    , languagesArr = ['A', 'B', 'C', 'D', 'E']
-    , languages = {
-          'A': 'affirmation'
-        , 'B': 'time'
-        , 'C': 'gifts'
-        , 'D': 'service'
-        , 'E': 'touch'
-      }
+    , languagesArr = Object.keys(languages)
     , languagesMap
     , current
-    , responses = {
-          totals: {
-              affirmation: 0
-            , time: 0
-            , gifts: 0
-            , service: 0
-            , touch: 0
-          }
-        , answers: {
-          }
-      }
+    , responses = { totals: {} , answers: {} }
     ;
 
-  function shuffle() {
-    return Math.random() - 0.5;
-  }
+  languagesArr.forEach(function (key) {
+    responses.totals[languages[key]] = 0;
+  });
 
   function presentQuestion() {
     if (true !== (questions.length >= 1)) {
@@ -54,9 +40,9 @@
     } else {
       console.log("Which describes you best (if torn between two, think of your childhood)?");
     }
-    languagesArr.sort(shuffle);
+    shuffle(languagesArr);
     languagesMap = {};
-    languagesArr.forEach(function (lang, i) {
+    languagesArr.forEach(function (lang) {
       if (!current[lang]) {
         return;
       }
@@ -90,17 +76,17 @@
   }
 
   function saveResponses() {
-    var filename = 'love-languages-test' + Date.now() + '.json'
+    var filename = responseFilePrefix + '-' + Date.now() + '.json'
       ;
 
     // TODO output as YAML
     fs.writeFile(filename, JSON.stringify(responses, null, '  '), function (err) {
       console.log('You finished');
-      console.log('affirmation:', responses.totals.affirmation);
-      console.log('time:', responses.totals.time);
-      console.log('gifts:', responses.totals.gifts);
-      console.log('service:', responses.totals.service);
-      console.log('touch:', responses.totals.touch);
+      Object.keys(responses.totals).sort(function (keyA, keyB) {
+        return responses.totals[keyB] - responses.totals[keyA];
+      }).forEach(function (key) {
+        console.log(key + ':', responses.totals[key]);
+      });
       console.log("Now go read the book to learn more!");
       if (err) {
         console.error("couldn't save results");
@@ -135,11 +121,13 @@
     saveResponses();
   }
 
-  questions.sort(shuffle);
+  shuffle(questions);
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   console.log('');
-  console.log('Welcome to The Love Languages Test: Commandline Edition.');
+  console.log(title);
+  console.log('');
+  console.log('Read the question, type your answer (1 or 2), and hit enter to submit');
   console.log('');
   console.log('Type \'p\' to go to the previous question if you make a boo-boo.');
   console.log('');

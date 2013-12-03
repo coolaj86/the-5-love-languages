@@ -24,14 +24,23 @@ Test Format
 
 `questionaire.json` must follow the example file:
 
-    [
-        {
-            "number": "1"
-          , "A": "I like to be affirmed."
-          , "B": "I like to be touched."
-        }
-    ]
+```javascript
+{ "title": "Welcome to the 5 Love Languages Test"
+, "groups": {
+    "A": "affirmation"
+  , "B": "touch"
+  , "C": "gifts"
+  , "D": "service"
+  , "E": "touch"
+  }
+, "questions": [
+    {
+        "number": "1"
+      , "A": "I like to be affirmed."
+      , "B": "I like to be touched."
+    }
+  ]
+}
+```
 
-The keys may be `A`, `B`, `C`, `D`, or `E`. Only two keys may be added per test.
-
-Note: This format may be changed in a future version.
+The keys may be anything you like, but only two keys may be added per test.

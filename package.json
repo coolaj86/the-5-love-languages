@@ -2,7 +2,7 @@
   "author": "AJ ONeal <coolaj86@gmail.com> (http://coolaj86.com/)",
   "name": "love-language",
   "description": "Quizomatic Presents: A commandline version of The Love Languages test",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "homepage": "https://github.com/coolaj86/the-5-love-languages",
   "repository": {
     "url": "git://github.com/coolaj86/the-5-love-languages.git"

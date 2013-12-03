@@ -1,4 +1,5 @@
-(function () {
+/*jshint -W054 */
+(function (exports) {
   "use strict";
 
   var shuffle = require('knuth-shuffle').knuthShuffle
@@ -130,6 +131,11 @@
   function create(dir, opts) {
     return new Quizomatic(dir, opts);
   }
+  Quizomatic.create = create;
 
-  module.exports.create = create;
-}());
+  if ('undefined' !== typeof module) {
+    exports = Quizomatic;
+    module.exports = exports;
+  }
+  exports.Quizomatic = Quizomatic;
+}('undefined' !== typeof exports && exports || new Function('return this')()));

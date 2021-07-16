@@ -4,7 +4,6 @@
 
 var fs = require("fs");
 var path = require("path");
-var util = require("util");
 var Quizomatic = require("./quizomatic").Quizomatic;
 var questionnaireFile =
   process.argv[2] || path.join(__dirname, "./questionnaire.json");
@@ -33,12 +32,12 @@ function presentQuestion(data) {
   }
 
   current.choices.forEach(function (choice, i) {
-    util.print(String(i + 1) + ") ");
+    process.stdout.write(String(i + 1) + ") ");
     console.log(choice.response);
   });
 
   console.log("");
-  util.print("answer> ");
+  process.stdout.write("answer> ");
 }
 
 function saveResponses() {

@@ -8,6 +8,7 @@
     "url": "git://github.com/coolaj86/the-5-love-languages.git"
   },
   "main": "quizomatic.js",
+  "files": ["cli.js", "get-example.js", "quizomatic.js"],
   "scripts": {
     "test": "node cli",
     "postinstall": "node ./get-example.js"
@@ -18,8 +19,8 @@
   "devDependencies": {},
   "optionalDependencies": {},
   "bin": {
-    "love-language": "cli.js"
-  , "quizomatic": "cli.js"
+    "love-language": "cli.js",
+    "quizomatic": "cli.js"
   },
   "engines": {
     "node": "*"

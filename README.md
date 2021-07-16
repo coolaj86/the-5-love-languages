@@ -1,8 +1,6 @@
-The Five Love Languages Test
-===
+# The Five Love Languages Test
 
-New, Unimproved, Commandline Edition
----
+## New, Unimproved, Commandline Edition
 
 After creating a test in the format of "The Color Code: Commandline Edition",
 the next natural step was to create a test in the format of "The 5 Love Languages".
@@ -11,8 +9,7 @@ Also randomized and saved to JSON. W00T!
     npm install -g love-language
     love-language
 
-Generic Questionnaire
-===
+# Generic Questionnaire
 
 The name of the test is somewhat of a misnomer.
 Although originally designed for taking The 5 Love Languages test with friends,
@@ -21,8 +18,7 @@ Simply specify the name of the questionaire you would like to take.
 
     love-language ./any-test.json
 
-Test Format
----
+## Test Format
 
 `questionaire.json` must follow the example file:
 
